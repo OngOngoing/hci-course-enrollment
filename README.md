@@ -1,5 +1,6 @@
-# Simple-todo-app
-Simple todo app with angularJS, ui-router, simple http-server and bootstrap
+# hci-course-enrollment
+Course Enrollment design for HCI class
+
 
 **Please install Node.js before using**
 
