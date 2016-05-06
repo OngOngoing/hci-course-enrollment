@@ -1,0 +1,43 @@
+<!doctype html>
+<html ng-app="MainApp">
+  <head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <!-- CSS file
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="src/css/todo.css">
+  </head>
+  <body>
+    <!-- Import scripts -->
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <!--<script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    !-->
+
+    <!-- App controller -->
+    <script src="src/js/controller/main.js"></script>
+    <script src="src/js/route/route.js"></script>
+
+    <div layout="column" ng-cloak style="height:100%">
+      <md-toolbar class="md-padding md-whiteframe-8dp">
+        <md-tabs md-selected="selectedIndex" md-autoselect>
+          <a><md-tab ui-sref="home">Home</md-tab></a>
+          <a><md-tab ui-sref="enrollment">Enroll</md-tab></a>
+        </md-tabs>
+      </md-toolbar>
+
+      <md-content flex>
+        <div ui-view></div>
+      </md-content>
+    </div>
+
+
+
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<md-toolbar md-scroll-shrink ng-if="true" class="md-padding md-whiteframe-8dp">
+  <div class="md-toolbar-tools">
+    <h3>
+      <span>Courses Available</span>
+    </h3>
+  </div>
+</md-toolbar>
+
+<div class="container text-center">
+          <div>
+            <md-input-container class="md-block">
+              <label>Search</label>
+              <input ng-model="search">
+            </md-input-container>
+          </div>
+
+      <md-list ng-cloak>
+        <md-card ng-repeat="course in courses | filter:search track by course.id">
+        <md-list-item class="secondary-button-padding" ng-click="showDescription($event)">
+          <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+          <div class="md-list-item-text" layout="column">
+            <h3>{{ course.id }}</h3>
+            <p>{{ course.name.en }}</p>
+          </div>
+        </md-list-litem>
+        </md-card>
+        <md-divider md-inset hide-sm ng-if="!$last"></md-divider>
+        <md-divider hide-gt-sm ng-if="!$last"></md-divider>
+      </md-list>
+
+</div>
