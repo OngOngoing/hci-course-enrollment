@@ -2,20 +2,56 @@
 <html ng-app="MainApp">
   <head>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
     <!-- CSS file
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"><link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="src/css/todo.css">
+    <link rel="stylesheet" href="bower_components/angular-material-icons/angular-material-icons.css">
   </head>
-  <body>
+
+  <!-- <body layout="column" ng-cloak>
+  <div flex layout="row">
+
+    <md-sidenav md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left" class="md-whiteframe-z2" >
+      <md-toolbar class="md-tall md-hue-2">
+        <span flex></span>
+        <div layout="column" class="md-toolbar-tools-bottom inset">
+          <user-avatar></user-avatar>
+          <span></span>
+          <div>Firstname Lastname</div>
+          <div>email@domainname.com</div>
+        </div>
+      </md-toolbar>
+
+      <md-list>
+        <md-list-item ui-sref="home">
+          Home
+        </md-list-item>
+        <md-list-item ui-sref="enrollment">
+          Enrollment
+        </md-list-item>
+      </md-list>
+    </md-sidenav>
+
+    <md-content flex id="content">
+      <div ui-view></div>
+    </md-content>
+
+  </div> -->
+
+  <body layout="column" ng-cloak ng-controller="AppCtrl">
+
     <!-- Import scripts -->
     <script type="text/javascript" src="bower_components/angular/angular.js"></script>
     <script src="/bower_components/angular-aria/angular-aria.js"></script>
     <script src="/bower_components/angular-animate/angular-animate.js"></script>
     <script src="/bower_components/angular-material/angular-material.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/bower_components/angular-material-icons/angular-material-icons.min.js"></script>
     <!--<script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     !-->
@@ -24,19 +60,35 @@
     <script src="src/js/controller/main.js"></script>
     <script src="src/js/route/route.js"></script>
 
-    <div layout="column" ng-cloak style="height:100%">
-      <md-toolbar class="md-padding md-whiteframe-8dp">
-        <md-tabs md-selected="selectedIndex" md-autoselect>
-          <a><md-tab ui-sref="home">Home</md-tab></a>
-          <a><md-tab ui-sref="enrollment">Enroll</md-tab></a>
-        </md-tabs>
-      </md-toolbar>
+    <div flex layout="row">
+      <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+        <md-toolbar class="md-tall md-hue-2">
+          <span flex></span>
+          <div layout="column" class="md-toolbar-tools-bottom inset">
+            <user-avatar></user-avatar>
+            <span></span>
+            <div>{{userData.name}}</div>
+            <div>{{userData.id}}</div>
+          </div>
+        </md-toolbar>
 
-      <md-content flex>
+        <md-content>
+          <md-list ng-cloak="" class="listdemoListControls">
+            <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader>
+            <md-list-item ui-sref="home">
+              <p>Home</p>
+            </md-list-item>
+            <md-list-item ui-sref="enrollment">
+              <p>Enrollment</p>
+            </md-list-item>
+          </md-list>
+        </md-content>
+      </md-sidenav>
+
+      <md-content layout="column" flex>
         <div ui-view></div>
       </md-content>
     </div>
-
 
 
   </body>

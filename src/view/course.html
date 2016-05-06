@@ -1,0 +1,40 @@
+<md-dialog ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{course.id}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <ng-md-icon icon="close" aria-label="Close dialog"></ng-md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div ng-show="course">
+          <h2>{{course.name.en}}</h2>
+          <md-subheader class="md-primary">Credit : {{course.credit.total}}</md-subheader>
+          <p>
+            {{course.description.en}}
+          </p>
+          <p>
+            {{course.description.th}}
+          </p>
+        </div>
+        <md-progress-circular md-mode="indeterminate" md-diameter="100%" ng-show="!course"></md-progress-circular>
+
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions ng-show="course" layout="row">
+      <span flex></span>
+      <md-button ng-model="enrollButton" class="md-raised md-primary" ng-click="answer('enroll')" ng-if="!isEnrolled && !isPressed">
+       Enroll
+      </md-button>
+      <md-progress-circular md-mode="indeterminate" md-diameter="70%" ng-show="isPressed"></md-progress-circular>
+      <md-button ng-disabled="true" class="md-primary" ng-if="isEnrolled">Already Enrolled</md-button>
+      <md-button ng-model="enrollButton" class="md-raised md-warn" ng-click="confirmDrop(course.id, course.name.en)" ng-if="isEnrolled && !isPressed">
+       Drop
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

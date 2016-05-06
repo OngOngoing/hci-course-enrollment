@@ -6,7 +6,7 @@
   </div>
 </md-toolbar>
 
-<div class="container text-center">
+<div class="text-center md-padding">
           <div>
             <md-input-container class="md-block">
               <label>Search</label>
@@ -16,11 +16,12 @@
 
       <md-list ng-cloak>
         <md-card ng-repeat="course in courses | filter:search track by course.id">
-        <md-list-item class="secondary-button-padding" ng-click="showDescription($event)">
+        <md-list-item class="secondary-button-padding" ng-click="showDescription(course.id)">
           <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
           <div class="md-list-item-text" layout="column">
             <h3>{{ course.id }}</h3>
             <p>{{ course.name.en }}</p>
+            <md-button ng-if="isEnrolled( course.id )" class="md-secondary" ng-disabled="true">Enrolled</md-button>
           </div>
         </md-list-litem>
         </md-card>

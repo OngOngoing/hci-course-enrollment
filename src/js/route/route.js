@@ -16,4 +16,10 @@ angular.module('MainApp')
       controller: "EnrollmentController",
       controllerAs: "EnrollmentCtrl"
     })
+    .state('enroll_course', {
+      url: "/enrollment/{id:int}",
+      templateUrl: "src/view/course.tmpl",
+      controller: "CourseController",
+      controllerAs: "CourseCtrl"
+    })
 });
