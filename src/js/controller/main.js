@@ -1,4 +1,4 @@
-var app = angular.module('MainApp', ['ui.router', 'ngMaterial', 'ngMdIcons'])
+var app = angular.module('MainApp', ['ui.router', 'ngMaterial', 'ngMdIcons', 'md.data.table'])
 
 app.controller('EnrollmentController', function($rootScope, $scope, $http, $mdDialog, $mdMedia) {
   $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
@@ -96,6 +96,10 @@ function CourseController($rootScope, $scope, $mdDialog, $http, courseID, isEnro
 
   $http.get('https://whsatku.github.io/skecourses/' + courseID + '.json').success(function(course){
     $scope.course = course;
+  });
+
+  $http.get('https://whsatku.github.io/skecourses/sections/' + courseID + '.json').success(function(sections){
+    $scope.sections = sections;
   });
 
   $scope.hide = function() {

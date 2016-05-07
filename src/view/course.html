@@ -14,12 +14,58 @@
         <div ng-show="course">
           <h2>{{course.name.en}}</h2>
           <md-subheader class="md-primary">Credit : {{ course.credit.total }}({{ course.credit.lecture }}-{{ course.credit.lab }}-{{ course.credit.self }})</md-subheader>
+
+          <md-table-container>
+            <table md-table>
+              <thead md-head>
+                <tr md-row>
+                  <th md-column><span>Section</span></th>
+                  <th md-column>Type</th>
+                  <th md-column>Date</th>
+                  <th md-column>Location</th>
+                  <th md-column>Instructor</th>
+                  <th md-column>Enrolled</th>
+                  <th md-column>Credit/Audit</th>
+                  <th md-column>Action</th>
+                </tr>
+              </thead>
+              <tbody md-body>
+                <tr md-row ng-repeat="section in sections">
+                  <td md-cell>{{section.id}}</td>
+                  <td md-cell>{{section.type}}</td>
+                  <td md-cell>{{section.date}}</td>
+                  <td md-cell>{{section.location}}</td>
+                  <td md-cell>
+                    <p ng-repeat="instructor in section.instructors">{{instructor}}</p>
+                  </td>
+                  <td md-cell>{{section.enrolled}}/{{section.accept}}</td>
+                  <td md-cell>
+
+                    <md-input-container>
+                      <md-select aria-label="regisType" name="regisType" ng-model="regisType" required>
+                        <md-option value="credit" selected>Credit</md-option>
+                        <md-option value="audit">Audit</md-option>
+                      </md-select>
+
+                    </md-input-container>
+
+                  </td>
+                  <td md-cell>X</td>
+                </tr>
+              </tbody>
+            </table>
+          </md-table-container>
+
+
+          <h3>Description</h3>
           <p>
             {{course.description.en}}
           </p>
           <p>
             {{course.description.th}}
           </p>
+
+
         </div>
         <md-progress-circular md-mode="indeterminate" md-diameter="100%" ng-show="!course"></md-progress-circular>
 
