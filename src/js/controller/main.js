@@ -8,7 +8,17 @@ app.controller('EnrollmentController', function($rootScope, $scope, $http, $mdDi
   });
 
   $scope.isEnrolled = function(courseID) {
-    return $rootScope.userData.courses.includes(courseID);
+
+    var result = false;
+
+    for (index = 0; index < $rootScope.userData.courses.length; index++) {
+      if($rootScope.userData.courses[index].id == courseID) {
+        result = true;
+        break;
+      }
+    }
+
+    return result;
   }
 
 
@@ -91,6 +101,40 @@ app.controller('AppCtrl', function($scope, $state, $rootScope, $mdBottomSheet, $
 
 
 function CourseController($rootScope, $scope, $mdDialog, $http, courseID, isEnrolled) {
+
+  $scope.isSectionEnrolled = function(courseID, section) {
+    var result = false;
+    for (index = 0; index < $rootScope.userData.courses.length; index++) {
+      if($rootScope.userData.courses[index].id == courseID && $rootScope.userData.courses[index].section.id == section.id && $rootScope.userData.courses[index].section.type == section.type) {
+        result = true;
+        break;
+      }
+    }
+    return result;
+  }
+
+  $scope.getEnrollmentIndex = function(courseID, section) {
+    var result;
+    for (index = 0; index < $rootScope.userData.courses.length; index++) {
+      if($rootScope.userData.courses[index].id == courseID && $rootScope.userData.courses[index].section.id == section.id && $rootScope.userData.courses[index].section.type == section.type) {
+        result = index;
+        break;
+      }
+    }
+    return result;
+  }
+
+  $scope.getEnrollment = function(courseID, section) {
+    var result;
+    for (index = 0; index < $rootScope.userData.courses.length; index++) {
+      if($rootScope.userData.courses[index].id == courseID && $rootScope.userData.courses[index].section.id == section.id && $rootScope.userData.courses[index].section.type == section.type) {
+        result = $rootScope.userData.courses[index];
+        break;
+      }
+    }
+    return result;
+  }
+
   $scope.isEnrolled = isEnrolled;
   $scope.courseID = courseID;
 
@@ -99,7 +143,10 @@ function CourseController($rootScope, $scope, $mdDialog, $http, courseID, isEnro
   });
 
   $http.get('https://whsatku.github.io/skecourses/sections/' + courseID + '.json').success(function(sections){
-    $scope.sections = sections;
+      $scope.sections = sections;
+      $scope.isAvailable = true;
+    }).error(function(x) {
+      $scope.isAvailable = false;
   });
 
   $scope.hide = function() {
@@ -108,14 +155,28 @@ function CourseController($rootScope, $scope, $mdDialog, $http, courseID, isEnro
   $scope.cancel = function() {
     $mdDialog.cancel();
   };
-  $scope.answer = function(answer) {
-    $scope.isPressed = true;
+  $scope.answer = function(section, regisType) {
+    $scope.press = {
+      isPressed: true,
+      section: section
+    }
     var userInfo = $rootScope.userData;
-    userInfo.courses.push(courseID);
+    section.enrolled+=1;
+    var courseObject = {
+      "id": courseID,
+      "regisType": regisType,
+      "section": section,
+      "name" : {
+        "en" : $scope.course.name.en,
+        "th" : $scope.course.name.th
+      },
+      "credit" : $scope.course.credit.total,
+    }
+    userInfo.courses.push(courseObject);
     var sendingData = {"5610545811": userInfo};
     $http.post('http://52.37.98.127:3000/v1/5610545811/?pin=5811', sendingData).then(function(response){
       console.log(response);
-      $mdDialog.hide(answer);
+      $mdDialog.hide();
       enrollToast(courseID,'is enrolled');
     }, function(xhr){
         alert(xhr.data);
@@ -124,17 +185,19 @@ function CourseController($rootScope, $scope, $mdDialog, $http, courseID, isEnro
 
   };
 
-  $scope.confirmDrop = function(courseID, courseName) {
+  $scope.confirmDrop = function(course, section) {
+
+
     // Appending dialog to document.body to cover sidenav in docs app
     var confirm = $mdDialog.confirm()
-          .title(courseID + ' DROP Confirmation')
-          .textContent('Are you sure you want to drop ['+ courseName + '] course?')
+          .title(course.id + ' DROP Confirmation')
+          .textContent('Are you sure you want to drop ['+ course.name.en + '] course?')
           .ariaLabel('Are you sure?')
           .ok('Yes, Please do it!')
           .cancel('No');
     $mdDialog.show(confirm).then(function() {
       var userInfo = $rootScope.userData;
-      userInfo.courses.splice(userInfo.courses.indexOf(courseID), 1);
+      userInfo.courses.splice($scope.getEnrollmentIndex(course.id, section), 1);
       var sendingData = {"5610545811": userInfo};
       $http.post('http://52.37.98.127:3000/v1/5610545811/?pin=5811', sendingData).then(function(response){
         console.log(response);

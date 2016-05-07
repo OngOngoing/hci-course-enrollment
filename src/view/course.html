@@ -14,8 +14,8 @@
         <div ng-show="course">
           <h2>{{course.name.en}}</h2>
           <md-subheader class="md-primary">Credit : {{ course.credit.total }}({{ course.credit.lecture }}-{{ course.credit.lab }}-{{ course.credit.self }})</md-subheader>
-
-          <md-table-container>
+          <md-button ng-disabled="true" class="md-primary" ng-if="!isAvailable">There is no section available this semester</md-button>
+          <md-table-container ng-if="isAvailable">
             <table md-table>
               <thead md-head>
                 <tr md-row>
@@ -38,19 +38,30 @@
                   <td md-cell>
                     <p ng-repeat="instructor in section.instructors">{{instructor}}</p>
                   </td>
-                  <td md-cell>{{section.enrolled}}/{{section.accept}}</td>
+                  <td md-cell>
+                    <p ng-if="getEnrollment(course.id, section)">{{getEnrollment(course.id, section).section.enrolled}}/{{section.accept}}</p>
+                    <p ng-if="!getEnrollment(course.id, section)">{{section.enrolled}}/{{section.accept}}</p>
+                  </td>
                   <td md-cell>
 
                     <md-input-container>
-                      <md-select aria-label="regisType" name="regisType" ng-model="regisType" required>
-                        <md-option value="credit" selected>Credit</md-option>
-                        <md-option value="audit">Audit</md-option>
+                      <md-select ng-disabled="getEnrollment(course.id, section).regisType" aria-label="regisType" name="regisType" ng-model="regisType" required>
+                        <md-option value="Credit" ng-selected="!getEnrollment(course.id, section).regisType || getEnrollment(course.id, section).regisType == 'Credit' ">Credit</md-option>
+                        <md-option value="Audit" ng-selected="getEnrollment(course.id, section).regisType == 'Audit' ">Audit</md-option>
                       </md-select>
 
                     </md-input-container>
 
                   </td>
-                  <td md-cell>X</td>
+                  <td md-cell>
+                    <md-button ng-model="enrollButton" class="md-raised md-primary" ng-click="answer(section, regisType)" ng-if="!isSectionEnrolled(course.id, section) && !press.isPressed">
+                     Enroll
+                    </md-button>
+                    <md-button ng-model="enrollButton" class="md-raised md-warn" ng-click="confirmDrop(course, section)" ng-if="isSectionEnrolled(course.id, section) && !press.isPressed">
+                     Drop
+                    </md-button>
+                    <md-progress-circular md-mode="indeterminate" md-diameter="70%" ng-show="press.isPressed && section == press.section"></md-progress-circular>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -73,14 +84,8 @@
     </md-dialog-content>
     <md-dialog-actions ng-show="course" layout="row">
       <span flex></span>
-      <md-button ng-model="enrollButton" class="md-raised md-primary" ng-click="answer('enroll')" ng-if="!isEnrolled && !isPressed">
-       Enroll
-      </md-button>
-      <md-progress-circular md-mode="indeterminate" md-diameter="70%" ng-show="isPressed"></md-progress-circular>
       <md-button ng-disabled="true" class="md-primary" ng-if="isEnrolled">Already Enrolled</md-button>
-      <md-button ng-model="enrollButton" class="md-raised md-warn" ng-click="confirmDrop(course.id, course.name.en)" ng-if="isEnrolled && !isPressed">
-       Drop
-      </md-button>
+      <md-button ng-disabled="true" class="md-primary" ng-if="!isAvailable && !isEnrolled">No Section Available</md-button>
     </md-dialog-actions>
   </form>
 </md-dialog>
