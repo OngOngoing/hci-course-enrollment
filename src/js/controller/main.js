@@ -31,10 +31,15 @@ app.controller('EnrollmentController', function($rootScope, $scope, $http, $mdDi
 });
 
 
-app.controller('AppCtrl', function($scope, $rootScope, $mdBottomSheet, $mdSidenav, $mdDialog, $mdToast, $http){
+app.controller('AppCtrl', function($scope, $state, $rootScope, $mdBottomSheet, $mdSidenav, $mdDialog, $mdToast, $http){
   $scope.toggleSidenav = function(menuId) {
     $mdSidenav(menuId).toggle();
   };
+
+  $scope.changeState = function (page) {
+    $state.go(page);
+  }
+
   $http.get('http://52.37.98.127:3000/v1/5610545811/5610545811?pin=5811').success(function(userData){
     $rootScope.userData = userData;
   });
@@ -148,7 +153,7 @@ app.controller('ToastCtrl', function($scope, $mdToast) {
 });
 
 app.config(function($mdThemingProvider) {
-  var customBlueMap = 		$mdThemingProvider.extendPalette('teal', {
+  var customBlueMap = 		$mdThemingProvider.extendPalette('green', {
     'contrastDefaultColor': 'light',
     'contrastDarkColors': ['50'],
     '50': 'ffffff'
