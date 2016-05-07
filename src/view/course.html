@@ -13,7 +13,7 @@
       <div class="md-dialog-content">
         <div ng-show="course">
           <h2>{{course.name.en}}</h2>
-          <md-subheader class="md-primary">Credit : {{course.credit.total}}</md-subheader>
+          <md-subheader class="md-primary">Credit : {{ course.credit.total }}({{ course.credit.lecture }}-{{ course.credit.lab }}-{{ course.credit.self }})</md-subheader>
           <p>
             {{course.description.en}}
           </p>
