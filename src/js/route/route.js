@@ -9,6 +9,8 @@ angular.module('MainApp')
     .state('home', {
       url: "/home",
       templateUrl: "src/view/home.tmpl",
+      controller: "HomeController",
+      controllerAs: "HomeCtrl"
     })
     .state('enrollment', {
       url: "/enrollment",
