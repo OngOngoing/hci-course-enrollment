@@ -19,7 +19,7 @@
     </div>
     <md-divider ></md-divider>
     <md-list ng-if="courses" class="nga-fast nga-stagger nga-fade" ng-cloak>
-      <md-list-item class="secondary-button-padding" ng-repeat="course in courses | filter:search" ng-click="showDescription(course.id)">
+      <md-list-item class="nga-fast nga-stagger nga-fade secondary-button-padding" ng-repeat="course in courses | filter:search" ng-click="showDescription(course.id)">
         <div class="md-list-item-text" layout="column" flex="40">
           <h3>{{ course.id }}</h3>
           <h4 class="text-semilight">{{ course.name.en }}</h4>

@@ -13,7 +13,27 @@
       <div class="md-dialog-content">
         <div ng-show="course">
           <h2>{{course.name.en}}</h2>
-          <md-subheader class="md-primary">Credit : {{ course.credit.total }}({{ course.credit.lecture }}-{{ course.credit.lab }}-{{ course.credit.self }})</md-subheader>
+          <div class="text-sub-grey text-semilight" style="font-size:18px">Credit 
+            <span class="text-green md-display-1">
+              {{ course.credit.total }}
+              <md-tooltip md-direction="top" md-visible="">Total</md-tooltip>
+            </span>
+              (
+              <span class="text-green md-headline">
+                {{ course.credit.lecture }}
+                <md-tooltip md-direction="top" md-visible="">Lecture</md-tooltip>
+              </span>
+              -
+              <span class="text-green md-headline">
+                {{ course.credit.lab }}
+                <md-tooltip md-direction="top" md-visible="">Lab</md-tooltip>
+              </span>
+              -
+              <span class="text-green md-headline">
+                {{ course.credit.self }}
+                <md-tooltip md-direction="top" md-visible="">Self</md-tooltip>
+              </span>
+            )</div>
           <md-button ng-disabled="true" class="md-primary" ng-if="!isAvailable">There is no section available this semester</md-button>
           <md-table-container ng-if="isAvailable">
             <table md-table>
