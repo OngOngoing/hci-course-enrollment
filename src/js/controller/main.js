@@ -3,6 +3,15 @@ var app = angular.module('MainApp', ['ui.router', 'ngMaterial', 'ngMdIcons', 'md
 app.controller('EnrollmentController', function($rootScope, $scope, $http, $mdDialog, $mdMedia) {
   $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 
+  $scope.getTotalCredits = function() {
+    var totalCredits = 0;
+    for (index = 0; index < $rootScope.userData.courses.length; index++) {
+      totalCredits += $rootScope.userData.courses[index].credit;
+    }
+    return totalCredits;
+  }
+
+
   $http.get('https://whsatku.github.io/skecourses/list.json').success(function(courseList){
     $scope.courses = courseList;
   });
@@ -214,7 +223,7 @@ function CourseController($rootScope, $scope, $mdDialog, $http, courseID, isEnro
     // Appending dialog to document.body to cover sidenav in docs app
     var confirm = $mdDialog.confirm()
           .title(course.id + ' DROP Confirmation')
-          .textContent('Are you sure you want to drop ['+ course.name.en + '] course?')
+          .textContent('Are you sure you want to drop ['+ course.name.en + '], Section: ' + section.id + '(' + section.type + ') course?')
           .ariaLabel('Are you sure?')
           .ok('Yes, Please do it!')
           .cancel('No');

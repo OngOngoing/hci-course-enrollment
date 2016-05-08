@@ -1,16 +1,27 @@
-<md-toolbar md-scroll-shrink class="md-whiteframe-2dp">
+<md-toolbar md-scroll-shrink class="md-hue-1 md-whiteframe-4dp">
   <div class="md-toolbar-tools md-display-1">
-    <h3 class="content-header">Courses Available</h3>
+    <md-button ng-click="toggleSidenav('left')" hide-gt-sm aria-label="Menu">
+      <ng-md-icon icon="menu"></ng-md-icon>
+    </md-button>
+    <div layout="row" layout-align="center center">
+      <h3 class="content-header">Course Enrollment</h3>
+    </div>
+    <div layout="row" layout-align="center center">
+      <md-icon icon="chevron_right" style="font-size:28px">chevron_right</md-icon>
+    </div>
+    <md-input-container flex="70" layout="row" layout-align="center center">
+      <label>&nbsp;</label>
+      <input ng-model="search" placeholder="Search">
+    </md-input-container>
+    <div class="animated fadeInRight" layout="row" layout-align="center center">
+      <md-icon icon="search">search</md-icon>
+    </div>
   </div>
 </md-toolbar>
 
+<md-content style="height: 100vh; background-color:#eee">
+
 <div flex-offset="10" flex="80">
-      <div>
-        <md-input-container class="md-block">
-          <label>Search</label>
-          <input ng-model="search">
-        </md-input-container>
-      </div>
 
       <div ng-if="!courses" layout="row" layout-align="center none">
         <md-progress-circular md-mode="indeterminate" md-diameter="100%"></md-progress-circular>
@@ -19,7 +30,9 @@
       <md-list ng-cloak>
         <md-card class="nga-fast nga-stagger nga-fade" ng-repeat="course in courses | filter:search track by course.id">
         <md-list-item class="secondary-button-padding" ng-click="showDescription(course.id)">
-          <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+          <div layout="column">
+            <md-icon class="md-avatar-icon" style="font-size:32px">school</md-icon>
+          </div>
           <div class="md-list-item-text" layout="column">
             <h3>{{ course.id }}</h3>
             <p>{{ course.name.en }}</p>
@@ -30,9 +43,11 @@
         </md-card>
       </md-list>
 
-      <md-button ng-if="courses" class="animated fadeInUp md-fab md-accent md-fab-bottom-right" style="position:fixed" aria-label="ShowJSON" ng-click="showJSON(courses)">
-        <md-tooltip md-direction="left" md-visible="tooltipVisible">Show JSON</md-tooltip>
-        <ng-md-icon icon="code"></ng-md-icon>
-      </md-button>
-
 </div>
+
+</md-content>
+
+<md-button ng-if="courses" class="animated fadeInUp md-fab md-accent md-fab-bottom-right" style="position:fixed" aria-label="ShowJSON" ng-click="showJSON(courses)">
+  <md-tooltip md-direction="left" md-visible="tooltipVisible">Show JSON</md-tooltip>
+  <md-icon icon="code">code</md-icon>
+</md-button>

@@ -1,5 +1,8 @@
-<md-toolbar md-scroll-shrink class="md-whiteframe-2dp">
+<md-toolbar md-scroll-shrink class="md-whiteframe-3dp">
   <div class="md-toolbar-tools md-display-1">
+    <md-button ng-click="toggleSidenav('left')" hide-gt-sm aria-label="Menu">
+      <ng-md-icon icon="menu"></ng-md-icon>
+    </md-button>
     <h3 class="content-header">Report Dashboard</h3>
   </div>
 </md-toolbar>
@@ -12,7 +15,7 @@
     <md-divider ></md-divider>
     <div ng-if="getTotalCredits()">
       <h1 class="content-header md-display-4 text-green">{{getTotalCredits()}}</h1>
-      <h4 class="content-header text-sub-grey">OF 23 CREDITS IN TOTAL</h4>
+      <h4 class="content-header text-sub-grey">OF 22 CREDITS IN TOTAL</h4>
     </div>
     <div ng-if="!courses" layout="row" layout-align="center none">
       <md-progress-circular md-mode="indeterminate" md-diameter="100%"></md-progress-circular>
