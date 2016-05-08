@@ -115,7 +115,7 @@ app.controller('AppCtrl', function($scope, $state, $rootScope, $mdBottomSheet, $
 
   enrollToast = function(course, message) {
     var toast = $mdToast.simple()
-          .textContent(course.id + ' (' + course.section.type+ ') ' + message)
+          .textContent(course.id + ' (' + course.section.id +' ' + course.section.type+ ') ' + message)
           .action('View JSON')
           .highlightAction(true)
           .position($scope.getToastPosition())
