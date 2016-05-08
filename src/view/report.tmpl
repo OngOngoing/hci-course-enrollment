@@ -10,121 +10,42 @@
   <md-card-content>
     <h2 class="content-header">Registration Report</h2>
     <md-divider ></md-divider>
-    <md-list class="" ng-cloak>
-      <md-subheader class="content-header md-no-sticky">Student Information</md-subheader>
-      <md-list-item layout="row">
-        <p class="md-headline text-front">Name</p>
-        <div flex="5"></div>
-        <p class="md-headline">John Doe</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Student ID</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">5610545811</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Account</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">b5610545811</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Email</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">b5610545811@ku.ac.th</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Sex</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">Male</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Country</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">Thailand</p>
-      </md-list-item>
-      <md-divider ></md-divider>
-
-      <md-subheader class="content-header md-no-sticky">Education Information</md-subheader>
-      <md-list-item layout="row">
-        <p class="md-headline text-front">Major Field</p>
-        <div flex="5"></div>
-        <p class="md-headline">Software & Knowledge Engineering (E17)</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Degree Level</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">Bachelor</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Faculty</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">Engineering</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Program Type</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">International Program (Special Program)</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Status</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">Currently studying</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Advisor</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">Punpiti Piamsa-Nga (E9013)</p>
-      </md-list-item>
-      <md-divider ></md-divider>
-
-
-
-      <md-subheader class="content-header md-no-sticky">Registration</md-subheader>
-      <md-list-item layout="row">
-        <p class="md-headline text-front">Eligibility</p>
-        <div flex="5"></div>
-        <p class="md-headline" style="color:green">Eligible</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Registration Date</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">10-01-2016</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Registration Time</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">11:00-12:00</p>
-      </md-list-item>
-      <md-divider ></md-divider>
-
-
-      <md-subheader class="content-header md-no-sticky">Payment Information</md-subheader>
-      <md-list-item layout="row">
-        <p class="md-headline text-front">Status</p>
-        <div flex="5"></div>
-        <p class="md-headline" style="color:green">Paid</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Payment Date</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">08-01-2016</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Amount</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub">60700</p>
-      </md-list-item>
-      <md-list-item layout="row">
-        <p class="md-title text-front">Bank</p>
-        <div flex="5"></div>
-        <p class="md-title text-sub" style="color:purple">Siam Commercial Bank</p>
-      </md-list-item>
-
-
-
+    <div ng-if="getTotalCredits()">
+      <h1 class="content-header md-display-4 text-green">{{getTotalCredits()}}</h1>
+      <h4 class="content-header text-sub-grey">OF 23 CREDITS IN TOTAL</h4>
+    </div>
+    <div ng-if="!courses" layout="row" layout-align="center none">
+      <md-progress-circular md-mode="indeterminate" md-diameter="100%"></md-progress-circular>
+    </div>
+    <md-divider ></md-divider>
+    <md-list ng-if="courses" class="nga-fast nga-stagger nga-fade" ng-cloak>
+      <md-list-item class="secondary-button-padding" ng-repeat="course in courses | filter:search" ng-click="showDescription(course.id)">
+        <div class="md-list-item-text" layout="column" flex="40">
+          <h3>{{ course.id }}</h3>
+          <h4 class="text-semilight">{{ course.name.en }}</h4>
+          <span class="text-light-grey" ng-repeat="instructor in course.section.instructors">{{instructor}}</span>
+        </div>
+        <div class="md-padding" layout="column"></div>
+        <div class="text-light-grey md-list-item-text" layout="column" flex="40">
+          <p style="font-size:20px">{{ course.section.id }} ({{course.section.type}})</p>
+          <span style="font-size:16px">{{course.section.date}}</span>
+          <span style="font-size:16px">{{course.section.location}}</span>
+        </div>
+        <div class="md-secondary">
+          <md-button class="nga-fast nga-stagger nga-fade" ng-disabled="true">{{course.regisType}}</md-button>
+          <p class="md-display-2 nga-fast nga-stagger nga-fade" ng-disabled="true" style="color:green; text-align:center">{{course.credit}}</p>
+        </div>
+      </md-list-litem>
+      <md-divider md-inset hide-sm ng-if="!$last"></md-divider>
+      <md-divider hide-gt-sm ng-if="!$last"></md-divider>
     </md-list>
+    <h4 ng-if="courses.length < 1" class="content-header text-grey">No course registered</h4>
   </md-card-content>
 </md-card>
+<md-button ng-if="courses" class="animated fadeInUp md-fab md-accent md-fab-bottom-right" style="position:fixed" aria-label="ShowJSON" ng-click="showJSON(courses)">
+  <md-tooltip md-direction="left" md-visible="tooltipVisible">Show JSON</md-tooltip>
+  <ng-md-icon icon="code"></ng-md-icon>
+</md-button>
 
 
 <div class="md-padding"></div>

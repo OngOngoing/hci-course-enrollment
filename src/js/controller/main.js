@@ -21,6 +21,15 @@ app.controller('EnrollmentController', function($rootScope, $scope, $http, $mdDi
     return result;
   }
 
+  $scope.isCourseAvailable = function(courseID) {
+    var courses = ["01219113", "01219215",
+      "01219216","01219243","01219244", "01219245", "01219246", "01219343", "01219344",
+      "01219347", "01219348" ,"01219351", "01219361" ,"01219412" ,"01219448" ,"01219449", "01219452" ,"01219492",
+      "01219496", "01219497", "01219498", "01219499"
+    ];
+    return courses.includes(courseID);
+  }
+
 
 
   $scope.showDescription = function(courseID) {
@@ -42,6 +51,26 @@ app.controller('EnrollmentController', function($rootScope, $scope, $http, $mdDi
 
 
 app.controller('AppCtrl', function($scope, $state, $rootScope, $mdBottomSheet, $mdSidenav, $mdDialog, $mdToast, $http){
+
+  $http.get('http://52.37.98.127:3000/v1/5610545811/5610545811?pin=5811').success(function(userData){
+    $rootScope.userData = userData;
+  });
+
+  $scope.showJSON = function(jsonObject) {
+    $mdDialog.show({
+      controller: JSONController,
+      templateUrl: 'src/view/jsonDialog.tmpl',
+      parent: angular.element(document.body),
+      clickOutsideToClose:true,
+      locals: { jsonString: JSON.stringify(jsonObject, null, 2) }
+    })
+    .then(function(answer) {
+      $scope.status = 'You said the information was "' + answer + '".';
+    }, function() {
+      $scope.status = 'You cancelled the dialog.';
+    });
+  };
+
   $scope.toggleSidenav = function(menuId) {
     $mdSidenav(menuId).toggle();
   };
@@ -49,10 +78,6 @@ app.controller('AppCtrl', function($scope, $state, $rootScope, $mdBottomSheet, $
   $scope.changeState = function (page) {
     $state.go(page);
   }
-
-  $http.get('http://52.37.98.127:3000/v1/5610545811/5610545811?pin=5811').success(function(userData){
-    $rootScope.userData = userData;
-  });
 
   var last = {
       bottom: false,
@@ -92,8 +117,6 @@ app.controller('AppCtrl', function($scope, $state, $rootScope, $mdBottomSheet, $
       }
     });
   };
-
-
 
 
 });

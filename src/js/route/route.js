@@ -21,7 +21,7 @@ angular.module('MainApp')
     .state('report', {
       url: "/report",
       templateUrl: "src/view/report.tmpl",
-      controller: "HomeController",
-      controllerAs: "HomeCtrl"
+      controller: "ReportController",
+      controllerAs: "ReportCtrl"
     })
 });

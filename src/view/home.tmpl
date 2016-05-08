@@ -126,5 +126,10 @@
   </md-card-content>
 </md-card>
 
+<md-button ng-if="userData" class="animated fadeInUp md-fab md-accent md-fab-bottom-right" style="position:fixed" aria-label="ShowJSON" ng-click="showJSON(userData)">
+  <md-tooltip md-direction="left" md-visible="tooltipVisible">Show JSON</md-tooltip>
+  <ng-md-icon icon="code"></ng-md-icon>
+</md-button>
+
 
 <div class="md-padding"></div>

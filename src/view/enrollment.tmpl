@@ -5,12 +5,16 @@
 </md-toolbar>
 
 <div flex-offset="10" flex="80">
-          <div>
-            <md-input-container class="md-block">
-              <label>Search</label>
-              <input ng-model="search">
-            </md-input-container>
-          </div>
+      <div>
+        <md-input-container class="md-block">
+          <label>Search</label>
+          <input ng-model="search">
+        </md-input-container>
+      </div>
+
+      <div ng-if="!courses" layout="row" layout-align="center none">
+        <md-progress-circular md-mode="indeterminate" md-diameter="100%"></md-progress-circular>
+      </div>
 
       <md-list ng-cloak>
         <md-card class="nga-fast nga-stagger nga-fade" ng-repeat="course in courses | filter:search track by course.id">
@@ -19,10 +23,16 @@
           <div class="md-list-item-text" layout="column">
             <h3>{{ course.id }}</h3>
             <p>{{ course.name.en }}</p>
-            <md-button ng-if="isEnrolled( course.id )" class="nga-fast nga-stagger nga-fade md-secondary" ng-disabled="true">Enrolled</md-button>
+            <span ng-if="isEnrolled( course.id )" class="md-body-2 nga-fast nga-stagger nga-fade md-secondary" ng-disabled="true" style="color:green">ENROLLED</span>
+            <md-button ng-if="!isCourseAvailable( course.id )" class="nga-fast nga-stagger nga-fade md-secondary" ng-disabled="true">UNAVAILABLE</md-button>
           </div>
         </md-list-litem>
         </md-card>
       </md-list>
+
+      <md-button ng-if="courses" class="animated fadeInUp md-fab md-accent md-fab-bottom-right" style="position:fixed" aria-label="ShowJSON" ng-click="showJSON(courses)">
+        <md-tooltip md-direction="left" md-visible="tooltipVisible">Show JSON</md-tooltip>
+        <ng-md-icon icon="code"></ng-md-icon>
+      </md-button>
 
 </div>

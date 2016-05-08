@@ -66,3 +66,29 @@ md-sidenav {
   font-weight: 300;
   text-align: center;
 }
+
+.light {
+  font-weight: 300;
+}
+
+.text-light-grey {
+  color: #424242;
+  font-weight: 300;
+  font-family: 'Roboto', sans-serif;
+}
+
+.text-semilight {
+  font-weight: 400;
+}
+
+.text-grey {
+  color : #757575;
+}
+
+.text-sub-grey {
+  color : #9E9E9E;
+}
+
+.text-green {
+  color : #00796B;
+}

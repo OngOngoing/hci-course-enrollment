@@ -1,0 +1,25 @@
+<md-dialog aria-label="JSON Dialog" ng-cloak> <form>
+  <form>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>JSON</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="exit()">
+        <ng-md-icon icon="close" aria-label="Close dialog"></ng-md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content class="animated fadeIn">
+    <pre ng-if="jsonString">{{jsonString}}</pre>
+    <div ng-if="!jsonString" layout="row" layout-align="center none">
+      <md-progress-circular md-mode="indeterminate" md-diameter="100%"></md-progress-circular>
+    </div>
+  </md-dialog-content>
+  <md-dialog-actions layout="row">
+    <span flex></span>
+    <md-button ng-click="answer('OK')">
+     OK
+    </md-button>
+  </md-dialog-actions>
+</form>
+</md-dialog>
