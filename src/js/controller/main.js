@@ -104,16 +104,16 @@ app.controller('AppCtrl', function($scope, $state, $rootScope, $mdBottomSheet, $
     last = angular.extend({},current);
   }
 
-  enrollToast = function(courseID, message) {
+  enrollToast = function(course, message) {
     var toast = $mdToast.simple()
-          .textContent(courseID + ' ' + message)
+          .textContent(course.id + ' (' + course.section.type+ ') ' + message)
           .action('View JSON')
           .highlightAction(true)
           .position($scope.getToastPosition())
           .hideDelay(1500);
     $mdToast.show(toast).then(function(response) {
       if ( response == 'ok' ) {
-        alert('You clicked \'OK\'.');
+        $scope.showJSON(course);
       }
     });
   };
@@ -200,7 +200,7 @@ function CourseController($rootScope, $scope, $mdDialog, $http, courseID, isEnro
     $http.post('http://52.37.98.127:3000/v1/5610545811/?pin=5811', sendingData).then(function(response){
       console.log(response);
       $mdDialog.hide();
-      enrollToast(courseID,'is enrolled');
+      enrollToast(courseObject,'is enrolled');
     }, function(xhr){
         alert(xhr.data);
         console.log(xhr.data);
@@ -210,7 +210,7 @@ function CourseController($rootScope, $scope, $mdDialog, $http, courseID, isEnro
 
   $scope.confirmDrop = function(course, section) {
 
-
+    course.section = section;
     // Appending dialog to document.body to cover sidenav in docs app
     var confirm = $mdDialog.confirm()
           .title(course.id + ' DROP Confirmation')
@@ -224,7 +224,7 @@ function CourseController($rootScope, $scope, $mdDialog, $http, courseID, isEnro
       var sendingData = {"5610545811": userInfo};
       $http.post('http://52.37.98.127:3000/v1/5610545811/?pin=5811', sendingData).then(function(response){
         console.log(response);
-        enrollToast(courseID,'is dropped');
+        enrollToast(course,'is dropped');
       }, function(xhr){
           alert(xhr.data);
           console.log(xhr.data);
