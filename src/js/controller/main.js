@@ -3,8 +3,6 @@ var app = angular.module('MainApp', ['ui.router', 'ngMaterial', 'ngMdIcons', 'md
 app.controller('EnrollmentController', function($rootScope, $scope, $http, $mdDialog, $mdMedia) {
   $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 
-  $scope.userData = $rootScope.userData;
-
   $scope.getTotalCredits = function() {
     var totalCredits = 0;
     for (index = 0; index < $rootScope.userData.courses.length; index++) {
@@ -120,8 +118,18 @@ app.controller('AppCtrl', function($scope, $state, $rootScope, $mdBottomSheet, $
   }
 
   $scope.logout = function () {
-    $rootScope.userData = null;
-    fireToast('You were logged out');
+    var confirm = $mdDialog.confirm()
+          .title('Logout Confirmation')
+          .textContent('Are you sure you want to logout? ')
+          .ariaLabel('Are you sure?')
+          .ok('Yes, Please do it!')
+          .cancel('No');
+    $mdDialog.show(confirm).then(function() {
+      $rootScope.userData = null;
+      fireToast('You were logged out');
+    }, function() {
+      $scope.status = 'You canceled to logout';
+    });
   }
 
   fireToast = function(message) {
