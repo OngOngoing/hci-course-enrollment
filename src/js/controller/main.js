@@ -65,6 +65,14 @@ app.controller('AppCtrl', function($scope, $state, $rootScope, $mdBottomSheet, $
     $rootScope.userData = userData;
   });
 
+  $scope.getTotalCredits = function() {
+    var totalCredits = 0;
+    for (index = 0; index < $rootScope.userData.courses.length; index++) {
+      totalCredits += $rootScope.userData.courses[index].credit;
+    }
+    return totalCredits;
+  }
+
   $scope.showJSON = function(jsonObject) {
     $mdDialog.show({
       controller: JSONController,
