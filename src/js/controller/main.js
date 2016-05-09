@@ -142,6 +142,11 @@ app.controller('AppCtrl', function($scope, $state, $rootScope, $mdBottomSheet, $
 
 function CourseController($rootScope, $scope, $mdDialog, $http, courseID, isEnrolled) {
 
+  $scope.getJSON = function(course, sections) {
+    course.sections = sections;
+    return JSON.stringify(course, null, 2);
+  }
+
   $scope.isSectionEnrolled = function(courseID, section) {
     var result = false;
     for (index = 0; index < $rootScope.userData.courses.length; index++) {
