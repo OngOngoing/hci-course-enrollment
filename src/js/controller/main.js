@@ -1,7 +1,9 @@
-var app = angular.module('MainApp', ['ui.router', 'ngMaterial', 'ngMdIcons', 'md.data.table'])
+var app = angular.module('MainApp', ['ui.router', 'ngMaterial', 'ngMdIcons', 'md.data.table', 'ngMessages'])
 
 app.controller('EnrollmentController', function($rootScope, $scope, $http, $mdDialog, $mdMedia) {
   $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+
+  $scope.userData = $rootScope.userData;
 
   $scope.getTotalCredits = function() {
     var totalCredits = 0;
@@ -61,9 +63,30 @@ app.controller('EnrollmentController', function($rootScope, $scope, $http, $mdDi
 
 app.controller('AppCtrl', function($scope, $state, $rootScope, $mdBottomSheet, $mdSidenav, $mdDialog, $mdToast, $http){
 
-  $http.get('http://52.37.98.127:3000/v1/5610545811/5610545811?pin=5811').success(function(userData){
-    $rootScope.userData = userData;
-  });
+  $scope.login = function(studentID, password) {
+    var isnum = /^\d+$/.test(studentID);
+    if(isnum && (studentID || password)) {
+      $http.get('http://52.37.98.127:3000/v1/5610545811/' + studentID +'?pin=5811').success(function(userData){
+        $rootScope.userData = userData;
+      }).error(function(xhr) {
+        $rootScope.userData = {
+          "name": "John Doe",
+          "courses" : [],
+          "id": studentID,
+          "major": "Software & Knowledge Engineering (E17)",
+          "faculty": "Engineering",
+          "advisor": "Punpiti Piamsa-Nga (E9013)",
+          "sex": "Male",
+          "email": "b" + studentID + "@ku.ac.th",
+          "program": "International Program (Special Program)",
+          "degree": "Bachelor",
+        }
+      });
+    }
+    else {
+      fireToast('Please fill in the correct student ID format');
+    }
+  }
 
   $scope.getTotalCredits = function() {
     var totalCredits = 0;
@@ -95,6 +118,22 @@ app.controller('AppCtrl', function($scope, $state, $rootScope, $mdBottomSheet, $
   $scope.changeState = function (page) {
     $state.go(page);
   }
+
+  $scope.logout = function () {
+    $rootScope.userData = null;
+    fireToast('You were logged out');
+  }
+
+  fireToast = function(message) {
+    var toast = $mdToast.simple()
+          .textContent(message)
+          .position($scope.getToastPosition())
+          .hideDelay(3000);
+    $mdToast.show(toast).then(function(response) {
+      if ( response == 'ok' ) {
+      }
+    });
+  };
 
   var last = {
       bottom: false,
@@ -218,7 +257,8 @@ function CourseController($rootScope, $scope, $mdDialog, $http, courseID, isEnro
       "credit" : $scope.course.credit.total,
     }
     userInfo.courses.push(courseObject);
-    var sendingData = {"5610545811": userInfo};
+    var sendingData = {};
+    sendingData[$rootScope.userData.id] = userInfo;
     $http.post('http://52.37.98.127:3000/v1/5610545811/?pin=5811', sendingData).then(function(response){
       console.log(response);
       $mdDialog.hide();
@@ -243,7 +283,8 @@ function CourseController($rootScope, $scope, $mdDialog, $http, courseID, isEnro
     $mdDialog.show(confirm).then(function() {
       var userInfo = $rootScope.userData;
       userInfo.courses.splice($scope.getEnrollmentIndex(course.id, section), 1);
-      var sendingData = {"5610545811": userInfo};
+      var sendingData = {}
+      sendingData[$rootScope.userData.id] = userInfo;
       $http.post('http://52.37.98.127:3000/v1/5610545811/?pin=5811', sendingData).then(function(response){
         console.log(response);
         enrollToast(course,'is dropped');

@@ -28,7 +28,7 @@
       </div>
 
       <md-list ng-cloak>
-        <md-card class="nga-fast nga-fade" ng-repeat="course in userData.courses | filter:search track by course.id">
+        <md-card class="nga-fast nga-fade" ng-repeat="course in userData.courses | filter:search">
         <md-list-item class="secondary-button-padding" ng-click="showDescription(course.id)">
           <div layout="column">
             <md-icon class="md-avatar-icon" style="font-size:32px; color:green">check</md-icon>

@@ -1,10 +1,8 @@
 var app = angular.module('MainApp')
 
 app.controller('ReportController', function($scope, $rootScope, $http, $mdDialog, $mdMedia) {
-  $http.get('http://52.37.98.127:3000/v1/5610545811/5610545811?pin=5811').success(function(userData){
-    $rootScope.userData = userData;
-    $scope.courses = $rootScope.userData.courses;
-  });
+  $scope.userData = $rootScope.userData;
+  $scope.courses = $rootScope.userData.courses;
 
   $scope.getTotalCredits = function() {
     var totalCredits = 0;
