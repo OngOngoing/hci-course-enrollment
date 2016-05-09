@@ -28,7 +28,7 @@
       </div>
 
       <md-list ng-cloak>
-        <md-card class="nga-fast nga-stagger nga-fade" ng-repeat="course in userData.courses | filter:search track by course.id">
+        <md-card class="nga-fast nga-fade" ng-repeat="course in userData.courses | filter:search track by course.id">
         <md-list-item class="secondary-button-padding" ng-click="showDescription(course.id)">
           <div layout="column">
             <md-icon class="md-avatar-icon" style="font-size:32px; color:green">check</md-icon>
@@ -36,14 +36,14 @@
           <div class="md-list-item-text" layout="column">
             <h3>{{ course.id }}</h3>
             <p>{{ course.name.en }}</p>
-            <span ng-if="isEnrolled( course.id )" class="md-body-2 nga-fast nga-stagger nga-fade md-secondary" ng-disabled="true" style="color:green">ENROLLED</span>
-            <md-button ng-if="!isCourseAvailable( course.id )" class="nga-fast nga-stagger nga-fade md-secondary" ng-disabled="true">UNAVAILABLE</md-button>
+            <span ng-if="isEnrolled( course.id )" class="md-body-2 nga-fast nga-fade md-secondary" ng-disabled="true" style="color:green">ENROLLED</span>
+            <md-button ng-if="!isCourseAvailable( course.id )" class="nga-fast nga-fade md-secondary" ng-disabled="true">UNAVAILABLE</md-button>
           </div>
         </md-list-litem>
         </md-card>
         <md-divider ></md-divider>
 
-        <md-card ng-if="!isEnrolled( course.id )" class="nga-fast nga-stagger nga-fade" ng-repeat="course in courses | filter:search track by course.id">
+        <md-card ng-if="!isEnrolled( course.id )" class="nga-fast nga-fade" ng-repeat="course in courses | filter:search track by course.id">
         <md-list-item class="secondary-button-padding" ng-click="showDescription(course.id)">
           <div layout="column">
             <md-icon class="md-avatar-icon" style="font-size:32px">school</md-icon>
@@ -51,8 +51,8 @@
           <div class="md-list-item-text" layout="column">
             <h3>{{ course.id }}</h3>
             <p>{{ course.name.en }}</p>
-            <span ng-if="isEnrolled( course.id )" class="md-body-2 nga-fast nga-stagger nga-fade md-secondary" ng-disabled="true" style="color:green">ENROLLED</span>
-            <md-button ng-if="!isCourseAvailable( course.id )" class="nga-fast nga-stagger nga-fade md-secondary" ng-disabled="true">UNAVAILABLE</md-button>
+            <span ng-if="isEnrolled( course.id )" class="md-body-2 nga-fast nga-fade md-secondary" ng-disabled="true" style="color:green">ENROLLED</span>
+            <md-button ng-if="!isCourseAvailable( course.id )" class="nga-fast nga-fade md-secondary" ng-disabled="true">UNAVAILABLE</md-button>
           </div>
         </md-list-litem>
         </md-card>
