@@ -1,6 +1,6 @@
 # hci-course-enrollment
 Course Enrollment design for HCI class
-
+ > https://ongongoing.github.io/hci-course-enrollment
 
 **Please install Node.js before using**
 
